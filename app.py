@@ -98,7 +98,6 @@ def admin_signup():
             error = "Username already in use"
         else:
             add_user("data.db", "admins", request.form['username'], request.form['password'])
-            modify("recipes.db", "saved", request.form['username'], [])
             return redirect(url_for("home"))
     return render_template('admin_signup.html', error=error, user=app.user)
 
@@ -114,5 +113,5 @@ def signout():
     
 @app.route("/contact")
 def load_contact():
-    return render_template("contact.html", user=app.user)
+    return render_template("contact.html", user=app.user, team_members=read("data.db", "admins"))
 
